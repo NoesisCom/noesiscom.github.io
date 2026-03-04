@@ -151,42 +151,56 @@
 <script>
 const data = {
     nodes: [
-        { id: "origin", label: "root" },
-        { id: "m1", label: "1102" },
-        { id: "m2", label: "1368" },
-        { id: "wallet", label: "4kpRcR" }
+        { id: "root", label: "origin", size: 8 },
+        { id: "m1102", label: "1102", size: 5 },
+        { id: "m1368", label: "1368", size: 5 },
+        { id: "wallet", label: "4kpRcR", size: 7, type: "heart" }
     ],
     links: [
-        { source: "origin", target: "m1" },
-        { source: "origin", target: "m2" },
-        { source: "m2", target: "wallet" }
+        { source: "root", target: "m1102" },
+        { source: "root", target: "m1368" },
+        { source: "m1368", target: "wallet" }
     ]
 };
 
-const width = document.getElementById('neural-graph').clientWidth;
+const width = window.innerWidth;
 const height = 400;
-
 const svg = d3.select("#neural-graph").append("svg")
-    .attr("width", width).attr("height", height);
+    .attr("width", "100%").attr("height", height);
 
 const simulation = d3.forceSimulation(data.nodes)
-    .force("link", d3.forceLink(data.links).id(d => d.id).distance(100))
-    .force("charge", d3.forceManyBody().strength(-200))
-    .force("center", d3.forceCenter(width / 2, height / 2));
+    .force("link", d3.forceLink(data.links).id(d => d.id).distance(120))
+    .force("charge", d3.forceManyBody().strength(-300))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(25));
 
-// Links (the "nerves")
 const link = svg.append("g").selectAll("line")
     .data(data.links).enter().append("line")
     .attr("stroke", "#1a1a1a").attr("stroke-width", 1);
 
-// Nodes (the "memories")
 const node = svg.append("g").selectAll("circle")
     .data(data.nodes).enter().append("circle")
-    .attr("r", 5).attr("fill", "#E996BA") // Your pink accent
-    .call(d3.drag() // Allows you to "pull" on your memories
+    .attr("r", d => d.size)
+    .attr("fill", "#E996BA")
+    .style("cursor", "crosshair")
+    .call(d3.drag()
         .on("start", (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
         .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
         .on("end", (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+// Glitch-effekten: Når du rører ved lommeboken
+node.on("mouseover", (event, d) => {
+    if (d.type === "heart") {
+        d3.select(event.currentTarget).attr("fill", "#fff"); // Blir hvit ved berøring
+        // Starter en kraftig vibrasjon i simuleringen
+        simulation.alphaTarget(0.8).velocityDecay(0.1).restart();
+    }
+}).on("mouseout", (event, d) => {
+    if (d.type === "heart") {
+        d3.select(event.currentTarget).attr("fill", "#E996BA");
+        simulation.alphaTarget(0).velocityDecay(0.4); // Roer seg ned igjen
+    }
+});
 
 simulation.on("tick", () => {
     link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
@@ -194,3 +208,4 @@ simulation.on("tick", () => {
     node.attr("cx", d => d.x).attr("cy", d => d.y);
 });
 </script>
+
