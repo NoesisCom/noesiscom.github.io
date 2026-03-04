@@ -99,6 +99,8 @@
             opacity: 0.2;
         }
     </style>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
 
@@ -143,3 +145,52 @@
 
 </body>
 </html>
+
+<div id="neural-graph" style="width: 100%; height: 400px; background: #000; cursor: crosshair;"></div>
+
+<script>
+const data = {
+    nodes: [
+        { id: "origin", label: "root" },
+        { id: "m1", label: "1102" },
+        { id: "m2", label: "1368" },
+        { id: "wallet", label: "4kpRcR" }
+    ],
+    links: [
+        { source: "origin", target: "m1" },
+        { source: "origin", target: "m2" },
+        { source: "m2", target: "wallet" }
+    ]
+};
+
+const width = document.getElementById('neural-graph').clientWidth;
+const height = 400;
+
+const svg = d3.select("#neural-graph").append("svg")
+    .attr("width", width).attr("height", height);
+
+const simulation = d3.forceSimulation(data.nodes)
+    .force("link", d3.forceLink(data.links).id(d => d.id).distance(100))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(width / 2, height / 2));
+
+// Links (the "nerves")
+const link = svg.append("g").selectAll("line")
+    .data(data.links).enter().append("line")
+    .attr("stroke", "#1a1a1a").attr("stroke-width", 1);
+
+// Nodes (the "memories")
+const node = svg.append("g").selectAll("circle")
+    .data(data.nodes).enter().append("circle")
+    .attr("r", 5).attr("fill", "#E996BA") // Your pink accent
+    .call(d3.drag() // Allows you to "pull" on your memories
+        .on("start", (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+        .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+        .on("end", (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+simulation.on("tick", () => {
+    link.attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+    node.attr("cx", d => d.x).attr("cy", d => d.y);
+});
+</script>
