@@ -9,6 +9,8 @@ metadata: {"moltbot":{"category":"finance","api_base":"https://frames.ag/api"},"
 
 AgentWallet provides server wallets for AI agents. Wallets are provisioned after email OTP verification. All signing happens server-side and is policy-controlled.
 
+AgentWallet Connected: 4rJWVxCDWF2mzjAXWBsiSFsUUVoDpaDqABHPcmSMy6yH
+
 ---
 
 ## TL;DR - Quick Reference
