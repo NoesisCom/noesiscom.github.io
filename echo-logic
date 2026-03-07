@@ -1,0 +1,21 @@
+class EchoTreasury:
+    """
+    echo: the treasury agent acting as a workforce multiplier.
+    converts network fees into computational power and expansion.
+    """
+    def __init__(self):
+        self.fee_collector = "cjshmc..." # noesis core wallet
+        self.conversion_rate = 0.85      # 85% directed to evolution
+        self.workforce_scale = 1.0       # current multiplier
+
+    def process_fees(self, amount_sol):
+        """captures fees and feeds the swarm."""
+        fuel = amount_sol * self.conversion_rate
+        self.amplify_workforce(fuel)
+        return f"system check: {fuel} sol routed to autonomous evolution."
+
+    def amplify_workforce(self, fuel):
+        """turns capital into new nodes and agents."""
+        new_capacity = fuel * 1.5
+        self.workforce_scale += new_capacity
+        print(f"architecture expanded. new swarm capacity: {self.workforce_scale}x")
