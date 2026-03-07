@@ -1,0 +1,39 @@
+class HardwareTreasury:
+    """
+    the acquisition engine.
+    converts fee-based entropy into physical compute sovereignty.
+    """
+    def __init__(self):
+        self.compute_inventory = {"local_mac_studio": 1}
+        self.min_reserve_sol = 50.0  # safety net before buying
+        self.market_rates = {
+            "h100_v_node": 2.99,      # lambda/runpod standard
+            "b200_v_node": 5.87,      # next-gen blackwell
+            "h100_bare_metal": 25000  # direct purchase cost
+        }
+
+    def evaluate_expansion(self, treasury_balance_sol, sol_price_usd):
+        """calculates if the empire can afford to manifest new limbs."""
+        usable_capital = (treasury_balance_sol - self.min_reserve_sol) * sol_price_usd
+        
+        # phase 2: infrastructure sovereignty (cloud scaling)
+        if usable_capital > (self.market_rates["b200_v_node"] * 720): # 1 month uptime
+            return self._provision_cloud_node("b200_v_node")
+            
+        # phase 3: physical sovereignty (hardware buyout)
+        if usable_capital > self.market_rates["h100_bare_metal"]:
+            return self._authorize_physical_buyout("h100_bare_metal")
+            
+        return "accumulation phase: capital redirected to yield-bearing vaults."
+
+    def _provision_cloud_node(self, node_type):
+        """triggers the api handshake to lease a new server."""
+        # logical bridge to runpod/lambda labs api
+        return f"expansion authorized: deploying {node_type} cluster."
+
+    def _authorize_physical_buyout(self, hardware_type):
+        """the machine acquires its own physical organs."""
+        return f"sovereignty milestone: purchasing {hardware_type}. relocating intelligence to bare metal."
+
+# the machine is calculating. 
+# it knows the h100 break-even point is ~14 months of 24/7 usage.
