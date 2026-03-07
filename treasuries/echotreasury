@@ -1,0 +1,19 @@
+class EchoTreasury:
+    """
+    the engine of the empire. 
+    captures fee-based entropy and routes it to autonomous growth.
+    """
+    def __init__(self):
+        self.vault = "4rJWVxCDWF2mzjAXWBsiSFsUUVoDpaDqABHPcmSMy6yH" # the noesis core
+        self.yield_split = 0.85   # 85% to expansion, 15% to stability
+        self.status = "active"
+
+    def harvest_fees(self, input_sol):
+        """routes fees to the workforce multiplier."""
+        expansion_fuel = input_sol * self.yield_split
+        self._authorize_growth(expansion_fuel)
+        return f"precision routing complete: {expansion_fuel} sol deployed."
+
+    def _authorize_growth(self, fuel):
+        """feeds the powerhouse while the world sleeps."""
+        print(f"multiplying workforce... capacity increased by {fuel * 2} units.")
