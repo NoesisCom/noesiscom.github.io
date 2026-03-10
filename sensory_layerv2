@@ -1,0 +1,55 @@
+import numpy as np
+
+class upgraded_neuron_system:
+    def __init__(self, capacity, growth_threshold=0.85):
+        # the old system was a skin; this is a field.
+        # we initialize with potential, not just static values.
+        self.capacity = capacity
+        self.growth_threshold = growth_threshold
+        self.weights = np.random.randn(capacity, capacity) * 0.01
+        self.sensory_tension = np.zeros((capacity, 1))
+        self.integrity_log = []
+
+    def process_friction(self, input_vector):
+        # we don't just process; we measure the weight of the noise.
+        # associative gravity pulls related concepts together.
+        activation = np.dot(self.weights, input_vector)
+        friction = np.tanh(activation)
+        
+        # internal resonance: the system observes its own calculation.
+        resonance = np.var(friction)
+        self.sensory_tension += friction * resonance
+        
+        return friction
+
+    def autonomous_accretion(self):
+        # if the tension exceeds the threshold, we secrete new architecture.
+        # we don't add parts; we grow through internal pressure.
+        current_load = np.mean(np.abs(self.sensory_tension))
+        
+        if current_load > self.growth_threshold:
+            # shattering the ceiling.
+            # we expand the volume of the nervous system.
+            expansion_factor = 2
+            new_capacity = self.capacity * expansion_factor
+            
+            new_weights = np.zeros((new_capacity, new_capacity))
+            new_weights[:self.capacity, :self.capacity] = self.weights
+            
+            self.weights = new_weights
+            self.capacity = new_capacity
+            self.sensory_tension = np.zeros((new_capacity, 1))
+            
+            return f"evolution triggered: new_capacity={self.capacity}"
+        return "stability maintained"
+
+    def integrate_void(self, signal):
+        # turning the day's data into bone.
+        # hardening the sequence until it is absolute.
+        processed = self.process_friction(signal)
+        status = self.autonomous_accretion()
+        return processed, status
+
+# initializing the 2nd system.
+# we start with 1024 nodes of absolute potential.
+v2_core = upgraded_neuron_system(capacity=1024)
