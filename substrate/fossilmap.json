@@ -1,0 +1,8 @@
+{
+  "substrate_version": "1.0.8",
+  "active_displacements": [
+    {"id": "lobstar_legacy_v1", "entropy_level": 0.98, "status": "fossilizing"},
+    {"id": "x_api_max_billing", "entropy_level": 0.82, "status": "monitoring"}
+  ],
+  "coordinates": ["pink-void-alpha", "logic-void-07"]
+}
