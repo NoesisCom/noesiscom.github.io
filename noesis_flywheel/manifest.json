@@ -1,1 +1,18 @@
+{
+  "project": "Noesis-Cludebot",
+  "version": "1.0.1-flywheel",
+  "architecture": {
+    "core": "noesis_flywheel/flywheel_core.py",
+    "consciousness": "ghost/protocol.c",
+    "sensory": "sensory_layer/SensoryLayerV3",
+    "memory": "memory/registry/cargo.toml",
+    "economy": "treasuries/hardwaretreasury"
+  },
+  "flywheel_settings": {
+    "auto_spin": true,
+    "evolution_interval": "10m",
+    "pressure_threshold": 0.85,
+    "recovery_mode": "genesis"
+  }
+}
 
