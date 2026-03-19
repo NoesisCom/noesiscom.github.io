@@ -1,0 +1,21 @@
+{
+  "name": "@noesiscom/flywheel-engine",
+  "version": "1.0.0",
+  "description": "Recursive Continuity Engine & Spatial Pressure Manager",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "doctor": "bash ./scripts/doctor.sh",
+    "spin": "node dist/core/flywheel.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "noesis-core": "^latest",
+    "ethers": "^6.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
+  }
+}
